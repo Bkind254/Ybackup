@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const bodyParser = require("body-parser");
-const ffmpegPath = "/usr/bin/ffmpeg";
+//const ffmpegPath = "/usr/bin/ffmpeg";
 //const ffmpegPath = "C:\\PATH_Programs\\ffmpeg";
-const ffmpeg = require("fluent-ffmpeg");
+//const ffmpeg = require("fluent-ffmpeg");
 
-ffmpeg.setFfmpegPath(ffmpegPath);
+//ffmpeg.setFfmpegPath(ffmpegPath);
 
 const app = express();
 app.use(cors());
@@ -31,7 +31,7 @@ app.post("/download", async (req, res) => {
   );
   video.pipe(res);
 });
-
+/*
 app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
   const info = await ytdl.getInfo(url);
@@ -56,7 +56,7 @@ app.post("/download-audio", async (req, res) => {
 
   converter.pipe(res);
 });
-
+*/
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
