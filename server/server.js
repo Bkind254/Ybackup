@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const ytdl = require("ytdl-core");
-const bodyParser = require("body-parser");
+import cors from "cors";
+import ytdl, { getInfo, chooseFormat } from "ytdl-core";
+import { json } from "body-parser";
+import express from "express";
 //const ffmpegPath = "/usr/bin/ffmpeg";
 //const ffmpegPath = "C:\\PATH_Programs\\ffmpeg";
 //const ffmpeg = require("fluent-ffmpeg");
@@ -10,14 +10,14 @@ const bodyParser = require("body-parser");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(json());
 
 app.post("/download", async (req, res) => {
   const url = req.body.url;
-  const info = await ytdl.getInfo(url);
+  const info = await getInfo(url);
   console.log(url);
   console.log(info.formats);
-  const format = ytdl.chooseFormat(info.formats, {
+  const format = chooseFormat(info.formats, {
     filter: "videoandaudio",
     quality: "highestvideo",
     format: "mp4",
