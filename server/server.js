@@ -1,23 +1,23 @@
-import cors from "cors";
-import ytdl, { getInfo, chooseFormat } from "ytdl-core";
-import { json } from "body-parser";
-import express from "express";
-//const ffmpegPath = "/usr/bin/ffmpeg";
+const express = require("express");
+const cors = require("cors");
+const ytdl = require("ytdl-core");
+const bodyParser = require("body-parser");
+const ffmpegPath = "/usr/bin/ffmpeg";
 //const ffmpegPath = "C:\\PATH_Programs\\ffmpeg";
-//const ffmpeg = require("fluent-ffmpeg");
+const ffmpeg = require("fluent-ffmpeg");
 
-//ffmpeg.setFfmpegPath(ffmpegPath);
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 const app = express();
 app.use(cors());
-app.use(json());
+app.use(bodyParser.json());
 
 app.post("/download", async (req, res) => {
   const url = req.body.url;
-  const info = await getInfo(url);
+  const info = await ytdl.getInfo(url);
   console.log(url);
   console.log(info.formats);
-  const format = chooseFormat(info.formats, {
+  const format = ytdl.chooseFormat(info.formats, {
     filter: "videoandaudio",
     quality: "highestvideo",
     format: "mp4",
@@ -31,7 +31,7 @@ app.post("/download", async (req, res) => {
   );
   video.pipe(res);
 });
-/*
+
 app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
   const info = await ytdl.getInfo(url);
@@ -56,7 +56,7 @@ app.post("/download-audio", async (req, res) => {
 
   converter.pipe(res);
 });
-*/
+
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
