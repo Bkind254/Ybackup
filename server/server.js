@@ -1,4 +1,4 @@
-/*const express = require("express");
+const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const bodyParser = require("body-parser");
@@ -55,37 +55,6 @@ app.post("/download-audio", async (req, res) => {
   );
 
   converter.pipe(res);
-});
-
-app.listen(3000, () => {
-  console.log("Server listening on port 3000");
-});*/
-
-const express = require("express");
-const cors = require("cors");
-const ffmpeg = require("fluent-ffmpeg");
-
-const app = express();
-app.use(cors());
-
-app.post("/download-audio", async (req, res) => {
-  const url = req.body.url;
-  const audio = ffmpeg(url)
-    .toFormat("mp3")
-    .on("error", (err) => {
-      console.log("An error occurred: " + err.message);
-    })
-    .on("end", () => {
-      console.log("Audio conversion complete");
-    });
-
-  const sanitizedTitle = url.split("/").pop().replace(/[^\w\s.]/gi, "");
-  res.header(
-    "Content-Disposition",
-    `attachment; filename="${sanitizedTitle}.mp3"`
-  );
-
-  audio.pipe(res);
 });
 
 app.listen(3000, () => {
