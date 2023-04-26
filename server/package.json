@@ -16,5 +16,8 @@
     "fluent-ffmpeg": "^2.1.2",
     "webpack": "^5.80.0",
     "ytdl-core": "^4.11.3"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.0.2"
   }
 }
